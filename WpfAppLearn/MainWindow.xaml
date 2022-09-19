@@ -1,0 +1,16 @@
+﻿<Window x:Class="WpfAppLearn.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppLearn"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid RenderTransformOrigin="0.498,0.497">
+        <Label Content="Погодное приложение" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Margin="0,115,0,0"/>
+        <TextBox x:Name="UserCityField" HorizontalAlignment="Center" Margin="0,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="21"/>
+        <Button x:Name="GetWeatherBtn" Content="Получить погоду" HorizontalAlignment="Center" Margin="0,241,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.024,-1.043" Width="100" Height="25" Click="GetWeatherBtn_Click"/>
+        <Label x:Name="WeatherResult" HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top" Height="23" Width="188"/>
+
+    </Grid>
+</Window>

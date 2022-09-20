@@ -27,6 +27,7 @@ namespace WpfAppLearn
         public MainWindow()
         {
             InitializeComponent();
+            MainScreen.IsChecked = true;
         }
 
         private async void GetWeatherBtn_Click(object sender, RoutedEventArgs e)
@@ -59,6 +60,18 @@ namespace WpfAppLearn
             string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric";
             return await client.GetStringAsync(url);
 
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            string objName = ((RadioButton)sender).Name;
+            StackPanel[] panels = { MainScreenPanel };
+            foreach (var el in panels)
+                el.Visibility = Visibility.Hidden;
+            switch (objName)
+            {
+                case ("MainScreen"): MainScreenPanel.Visibility = Visibility.Visible; break;   
+            }
         }
     }
 }

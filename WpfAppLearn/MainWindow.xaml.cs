@@ -43,7 +43,7 @@ namespace WpfAppLearn
                 string data = await GetWeather(city);
                 var json = JObject.Parse(data);
                 string temp = json["main"]["temp"].ToString();
-                WeatherResult.Content = temp;
+                WeatherResult.Content = $"В городе {city} температура воздуха {temp} по Цельсию";
             }catch(HttpRequestException ex)
             {
                 MessageBox.Show("Укажите верный город");

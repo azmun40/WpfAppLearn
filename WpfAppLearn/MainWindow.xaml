@@ -23,6 +23,7 @@
             <RadioButton Style="{StaticResource MenuItem}" x:Name="MainScreen"  Content="Главная" Checked="RadioButton_Checked"/>
             <RadioButton Style="{StaticResource MenuItem}" x:Name="NotesScreen" Content="Заметки" Checked="RadioButton_Checked"/>
             <RadioButton Style="{StaticResource MenuItem}" x:Name="Cabinet" Content="Личный кабинет" Checked="RadioButton_Checked"/>
+            <RadioButton Style="{StaticResource MenuItem}" x:Name="ListUsers" Content="Пользователи" Checked="RadioButton_Checked"/>
         </StackPanel>
         
 
@@ -34,6 +35,21 @@
             <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите город" x:Name="UserCityField" HorizontalAlignment="Center"  TextWrapping="Wrap" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
             <Button Margin="0,30,0,0" x:Name="GetWeatherBtn" Content="Получить погоду" HorizontalAlignment="Center" RenderTransformOrigin="0.024,-1.043" Width="148" Height="33" Click="GetWeatherBtn_Click"/>
             <Label x:Name="WeatherResult" Foreground="White" Margin="0,20,0,0" FontWeight="Bold"  HorizontalAlignment="Center" Height="23" Width="380"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" x:Name="UsersPanel">
+            <Label Margin="0,15,0,30" Content="Список пользователей" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Foreground="#FFEFE2E2"/>
+            <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите логин" x:Name="UserLoginEnter" HorizontalAlignment="Center"  TextWrapping="Wrap" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
+            <Button Margin="0,30,0,0" x:Name="DeleteUser" Content="Удалить" HorizontalAlignment="Center" RenderTransformOrigin="0.024,-1.043" Width="148" Height="33" Click="DeleteUser_Click"/>
+            <ListBox x:Name="ListLogin" Margin="0,40,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label x:Name="Login" Foreground="Aqua" Content="{Binding Login}" VerticalAlignment="Center"/>
+                            <Label x:Name="Email" Foreground="Coral" Content="{Binding Email}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>

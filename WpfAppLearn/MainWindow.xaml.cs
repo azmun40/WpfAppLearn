@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
+using WpfAppLearn.Models;
 
 namespace WpfAppLearn
 {
@@ -24,10 +26,19 @@ namespace WpfAppLearn
     {
 
         private const string API_KEY = "5cf4dd5be7a6ab85b34b33fd13c305b6";
+        private AppDbContext _db = new AppDbContext();
         public MainWindow()
         {
             InitializeComponent();
+
             MainScreen.IsChecked = true;
+            
+            ObservableCollection<User> items = new ObservableCollection<User>();
+            List<User> Users = _db.users.ToList();
+            foreach (User el in Users)
+                items.Add(el);
+            
+            ListLogin.ItemsSource = items;
         }
 
         private async void GetWeatherBtn_Click(object sender, RoutedEventArgs e)
@@ -65,13 +76,31 @@ namespace WpfAppLearn
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             string objName = ((RadioButton)sender).Name;
-            StackPanel[] panels = { MainScreenPanel };
+            StackPanel[] panels = {MainScreenPanel, UsersPanel };
             foreach (var el in panels)
                 el.Visibility = Visibility.Hidden;
             switch (objName)
             {
-                case ("MainScreen"): MainScreenPanel.Visibility = Visibility.Visible; break;   
+                case ("MainScreen"): MainScreenPanel.Visibility = Visibility.Visible; break;
+                case ("ListUsers"): UsersPanel.Visibility = Visibility.Visible; break;    
             }
+        }
+
+        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            string userLogin = UserLoginEnter.Text.Trim();
+            if (string.IsNullOrEmpty(userLogin))
+            {
+                MessageBox.Show("Введите логин!!");
+                return;
+            }
+            User user = (User)_db.users.Where(el => el.Login == userLogin).First() ?? new User();
+            _db.users.Remove(user);
+            _db.SaveChanges();
+
+            MessageBox.Show("Вы удалили пользователя");
+            UserLoginEnter.Text = "";
+            DeleteUser.Content = "Готово";
         }
     }
 }

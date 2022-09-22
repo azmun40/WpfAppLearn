@@ -11,10 +11,12 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Register" Height="450" Width="800">
     <StackPanel>
-        <Label Margin="0,70,0,20" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Foreground="#FFEFE2E2" FontWeight="Bold"/>
+        <Label Margin="0,40,0,20" Content="Регистрация" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Foreground="#FFEFE2E2" FontWeight="Bold"/>
         <TextBox Margin="0, 20, 0, 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите логин" x:Name="UserLoginField" HorizontalAlignment="Center"  TextWrapping="Wrap" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
         <TextBox Margin="0, 20, 0, 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите email" x:Name="UserEmailField" HorizontalAlignment="Center"  TextWrapping="Wrap" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
         <PasswordBox Margin="0, 20, 0, 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите пароль" x:Name="UserPasswordField" HorizontalAlignment="Center"  Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
         <Button Margin="0,35,0,0" x:Name="RegBtn" Content="Зарегистрироваться" HorizontalAlignment="Center" RenderTransformOrigin="0.024,-1.043" Width="168" Height="33" Click="RegBtn_Click"/>
+        <Button Margin="0,20,0,0" Style="{StaticResource MaterialDesignFlatButton}" x:Name="AuthBtnWindow" Content="Авторизоваться" HorizontalAlignment="Center" Width="Auto" Height="30" Click="AuthBtnWindow_Click"/>
+
     </StackPanel>
 </Window>

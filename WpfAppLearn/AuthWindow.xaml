@@ -15,5 +15,6 @@
         <TextBox Margin="0, 20, 0, 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите логин" x:Name="UserLoginField" HorizontalAlignment="Center"  TextWrapping="Wrap" Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
         <PasswordBox Margin="0, 20, 0, 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Foreground="White" materialDesign:HintAssist.Hint="Введите пароль" x:Name="UserPasswordField" HorizontalAlignment="Center"  Width="224" RenderTransformOrigin="-0.023,-2.618" Height="39"/>
         <Button Margin="0,35,0,0" x:Name="AuthBtn" Content="Войти" HorizontalAlignment="Center" RenderTransformOrigin="0.024,-1.043" Width="100" Height="30" Click="AuthBtn_Click"/>
+        <Button Margin="0,20,0,0" Style="{StaticResource MaterialDesignFlatButton}" x:Name="RegBtnWindow" Content="Зарегистрироваться" HorizontalAlignment="Center" Width="Auto" Height="30" Click="RegBtnWindow_Click" />
     </StackPanel>
 </Window>

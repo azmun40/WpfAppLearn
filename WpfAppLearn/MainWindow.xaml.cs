@@ -16,6 +16,8 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using WpfAppLearn.Models;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace WpfAppLearn
 {
@@ -39,6 +41,21 @@ namespace WpfAppLearn
                 items.Add(el);
             
             ListLogin.ItemsSource = items;
+
+            if (!File.Exists("user.xml"))
+            {
+                Hide();
+                AuthWindow authWindow = new AuthWindow();
+                authWindow.Show();
+                Close();
+            }
+
+            XmlSerializer xml = new XmlSerializer(typeof(AuthUsers));
+            using (FileStream file = new FileStream("user.xml", FileMode.Open))
+            {
+                AuthUsers auth = (AuthUsers)xml.Deserialize(file);
+                UserLoginLabel.Content = auth.Login;
+            }
         }
 
         private async void GetWeatherBtn_Click(object sender, RoutedEventArgs e)
@@ -76,13 +93,15 @@ namespace WpfAppLearn
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             string objName = ((RadioButton)sender).Name;
-            StackPanel[] panels = {MainScreenPanel, UsersPanel };
+            StackPanel[] panels = {MainScreenPanel, UsersPanel, ChangeScreenPanel, NotesScreenPanel };
             foreach (var el in panels)
                 el.Visibility = Visibility.Hidden;
             switch (objName)
             {
                 case ("MainScreen"): MainScreenPanel.Visibility = Visibility.Visible; break;
-                case ("ListUsers"): UsersPanel.Visibility = Visibility.Visible; break;    
+                case ("ListUsers"): UsersPanel.Visibility = Visibility.Visible; break;
+                case ("Cabinet"): ChangeScreenPanel.Visibility = Visibility.Visible; break;
+                case ("NotesScreen"): NotesScreenPanel.Visibility = Visibility.Visible; break;
             }
         }
 
@@ -101,6 +120,51 @@ namespace WpfAppLearn
             MessageBox.Show("Вы удалили пользователя");
             UserLoginEnter.Text = "";
             DeleteUser.Content = "Готово";
+        }
+
+        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            File.Delete("user.xml");
+            ShowAuthWindow();
+        }
+        private void ShowAuthWindow()
+        {
+            Hide();
+            AuthWindow window = new AuthWindow();
+            window.Show();
+            Close();
+        }
+
+        private void ChangeUser_Click(object sender, RoutedEventArgs e)
+        {
+            string login = UserChangeLogin.Text.Trim();
+            string email = UserChangeEmail.Text.Trim();
+            if (login.Equals("") || !email.Contains("@"))
+            {
+                MessageBox.Show("Вы что-то ввели неверно");
+                return;
+            }
+            int countUsers = _db.users.Count(el => el.Login == login);
+            if(countUsers != 0 && !login.Equals(UserLoginLabel.Content))
+            {
+                MessageBox.Show("Данный логин уже занят");
+                return ;
+            }
+
+            User user = _db.users.FirstOrDefault(el => el.Login == UserLoginLabel.Content.ToString());
+            user.Email = email;
+            user.Login = login;
+            _db.SaveChanges();
+            UserLoginLabel.Content = login;
+            ChangeUser.Content = "Готово";
+
+            AuthUsers auth = new AuthUsers(login, email);
+            XmlSerializer xml = new XmlSerializer(typeof(AuthUsers));
+            using (FileStream file = new FileStream("user.xml", FileMode.Create))
+            {
+                xml.Serialize(file, auth);
+
+            }
         }
     }
 }

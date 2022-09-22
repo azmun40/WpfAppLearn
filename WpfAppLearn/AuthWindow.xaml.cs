@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,8 +11,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 using WpfAppLearn.Models;
 
 namespace WpfAppLearn
@@ -25,18 +28,31 @@ namespace WpfAppLearn
         public AuthWindow()
         {
             InitializeComponent();
-            
+            if (File.Exists("user.xml"))
+                ShowMainWindow();
+        }
+        private void ShowMainWindow()
+        {
+            Hide();
+            MainWindow window = new MainWindow();
+            window.Show();
+            Close();
         }
 
         private void AuthBtn_Click(object sender, RoutedEventArgs e)
         {
             string login = UserLoginField.Text.Trim();
             string password = UserPasswordField.Password.Trim();
-            if (login.Equals("") || password.Length < 3)
+            if (login.Equals(""))
             {
-                MessageBox.Show("Вы ввели что-то неверно");
+                ShakeEffect<TextBox>(UserLoginField);
+                return;
+            }else if(password.Length <= 3)
+            {
+                ShakeEffect<PasswordBox>(UserPasswordField);
                 return;
             }
+                 
 
             User authUser = null;
             using(AppDbContext db = new AppDbContext())
@@ -47,9 +63,15 @@ namespace WpfAppLearn
                 MessageBox.Show("Такой пользователь не найден");
             else
             {
-                UserLoginField.Text = "";
-                UserPasswordField.Password = "";
-                AuthBtn.Content = "Готово";
+                AuthUsers auth =new AuthUsers(login, authUser.Email); 
+                XmlSerializer xml = new XmlSerializer(typeof(AuthUsers));
+                using(FileStream file = new FileStream("user.xml", FileMode.Create))
+                {
+                    xml.Serialize(file, auth);
+                    
+                }
+                ShowMainWindow();
+
             }
 
         }
@@ -63,6 +85,35 @@ namespace WpfAppLearn
                 var hash = sha1.ComputeHash(bytes);
                 return Convert.ToBase64String(hash);
             }
+        }
+
+        private void ShakeEffect<Type>(Type widget)
+        {
+            DoubleAnimation anim = new DoubleAnimation();
+            anim.From = 0;
+            anim.To = 5;
+            anim.Duration = TimeSpan.FromMilliseconds(200);
+            anim.RepeatBehavior = new RepeatBehavior(3);
+            anim.AutoReverse = true;
+
+            var rotate = new RotateTransform();
+            if (widget is TextBox)
+                (widget as TextBox).RenderTransform = rotate;
+            else if (widget is PasswordBox)
+                (widget as PasswordBox).RenderTransform = rotate;
+            else
+                throw new Exception("Type is not valid");
+
+
+            rotate.BeginAnimation(RotateTransform.AngleProperty, anim);
+        }
+
+        private void RegBtnWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            RegisterWindow window = new RegisterWindow();
+            window.Show();
+            Close();
         }
     }
 }

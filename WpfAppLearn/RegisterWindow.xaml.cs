@@ -35,9 +35,18 @@ namespace WpfAppLearn
             string password = UserPasswordField.Password.Trim();
             if(login.Equals("") || !email.Contains("@") || password.Length < 3)
             {
-                MessageBox.Show("Вы ввели что-то неверно");
+                MessageBox.Show("Вы что-то ввели неверно");
                 return;
+
             }
+            User authUser = _db.users.Where(el => el.Login == login).FirstOrDefault();
+            if(authUser != null)
+            {
+                MessageBox.Show("Пользователь с таким логином существует");
+                return;
+
+            }
+            
 
             User user = new User(login, email, Hash(password));
             _db.users.Add(user);
@@ -57,6 +66,14 @@ namespace WpfAppLearn
                 var hash = sha1.ComputeHash(bytes);
                 return Convert.ToBase64String(hash);
             }
+        }
+
+        private void AuthBtnWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            AuthWindow window = new AuthWindow();
+            window.Show();
+            Close();
         }
     }
 

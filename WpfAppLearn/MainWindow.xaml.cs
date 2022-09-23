@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using WpfAppLearn.Models;
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Win32;
 
 namespace WpfAppLearn
 {
@@ -165,6 +166,47 @@ namespace WpfAppLearn
                 xml.Serialize(file, auth);
 
             }
+        }
+
+        private void MenuOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.ShowDialog();
+
+        }
+
+        private void MenuNewFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuSaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.ShowDialog();
+
+        }
+
+        private void TimesNewRomanSetText_Click(object sender, RoutedEventArgs e)
+        {
+            UserNotes.FontFamily = new FontFamily("Times New Roman");
+            VerdanaSetText.IsChecked = false;
+            CalibriSetText.IsChecked = false;
+        }
+
+        private void VerdanaSetText_Click(object sender, RoutedEventArgs e)
+        {
+            UserNotes.FontFamily = new FontFamily("Verdana");
+            TimesNewRomanSetText.IsChecked = false;
+            CalibriSetText.IsChecked = false;
+
+        }
+
+        private void CalibriSetText_Click(object sender, RoutedEventArgs e)
+        {
+            UserNotes.FontFamily = new FontFamily("Calibri");
+            TimesNewRomanSetText.IsChecked = false;
+            VerdanaSetText.IsChecked = false;
         }
     }
 }

@@ -47,8 +47,34 @@
             <Button Margin="0,30,0,0" x:Name="ChangeUser" Content="Изменить" HorizontalAlignment="Center" RenderTransformOrigin="0.024,-1.043" Width="Auto" Height="Auto" Click="ChangeUser_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" x:Name="NotesScreenPanel">
+            <Label Content="Заметки" HorizontalAlignment="Center" Foreground="White" FontSize="20" FontWeight="Bold"/>
+            <Menu>
+                <MenuItem Header="Файл" Foreground="White" x:Name="MenuFile" >
+                    <MenuItem Header="Новый файл" x:Name="MenuNewFile" Click="MenuNewFile_Click" Foreground="Black"></MenuItem>
+                    <MenuItem Header="Открыть файл" x:Name="MenuOpenFile" Click="MenuOpenFile_Click" Foreground="Black"></MenuItem>
+                    <MenuItem Header="Сохранить файл" x:Name="MenuSaveFile" Click="MenuSaveFile_Click" Foreground="Black"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Редактировать" x:Name="MenuEditFile" Foreground="White">
+                    <MenuItem Header="Шрифт" x:Name="MenuSetFont" Foreground="Black">
+                        <MenuItem Header="TimesNewRoman" Click="TimesNewRomanSetText_Click" x:Name="TimesNewRomanSetText" StaysOpenOnClick="True" IsCheckable="True" Foreground="Black" />
+                        <MenuItem Header="Verdana" x:Name="VerdanaSetText" Click="VerdanaSetText_Click" StaysOpenOnClick="True" IsCheckable="True" Foreground="Black" />
+                        <MenuItem Header="Calibri" x:Name="CalibriSetText" Click="CalibriSetText_Click" StaysOpenOnClick="True" IsCheckable="True" Foreground="Black" />
+                    </MenuItem>
+                    <MenuItem x:Name="MenuCopyText" Header="Копировать" Foreground="Black" InputGestureText="Ctrl+C" Command="ApplicationCommands.Copy"/>
+                    <MenuItem x:Name="MenuCutText" Header="Вырезать" Foreground="Black" InputGestureText="Ctrl+X" Command="ApplicationCommands.Cut"/>
+                    <MenuItem x:Name="MenuPasteText" Header="Вставить" Foreground="Black" InputGestureText="Ctrl+V" Command="ApplicationCommands.Paste"/>
+                </MenuItem>
+            </Menu>
+            <ToolBarPanel Background="Transparent">
+                <ToolBar Background="Transparent">
+                    <Button ToolTip="Сохранить файл" Style="{StaticResource MaterialDesignFlatAccentButton}" Click="MenuSaveFile_Click" Cursor="Hand">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/savefile_icon.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                </ToolBar>
+            </ToolBarPanel>
             <TextBox x:Name="UserNotes" Margin="10" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Поле для записи" Foreground="White" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="200" />
-            
         </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" x:Name="UsersPanel" Visibility="Hidden">
             <Label Margin="0,15,0,30" Content="Список пользователей" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Foreground="#FFEFE2E2"/>

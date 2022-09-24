@@ -35,6 +35,7 @@ namespace WpfAppLearn
             InitializeComponent();
 
             MainScreen.IsChecked = true;
+            SelectDefaultFontSize.IsSelected = true;
             
             ObservableCollection<User> items = new ObservableCollection<User>();
             List<User> Users = _db.users.ToList();
@@ -207,6 +208,13 @@ namespace WpfAppLearn
             UserNotes.FontFamily = new FontFamily("Calibri");
             TimesNewRomanSetText.IsChecked = false;
             VerdanaSetText.IsChecked = false;
+        }
+
+        private void SelectFontSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem comboBoxItem = (ComboBoxItem)SelectFontSize.SelectedItem;
+            int fontSize = Convert.ToInt32(comboBoxItem.Content);
+            UserNotes.FontSize = fontSize;
         }
     }
 }

@@ -65,16 +65,27 @@
                     <MenuItem x:Name="MenuPasteText" Header="Вставить" Foreground="Black" InputGestureText="Ctrl+V" Command="ApplicationCommands.Paste"/>
                 </MenuItem>
             </Menu>
-            <ToolBarPanel Background="Transparent">
+            <ToolBarPanel Background="Transparent" Height="27">
                 <ToolBar Background="Transparent">
-                    <Button ToolTip="Сохранить файл" Style="{StaticResource MaterialDesignFlatAccentButton}" Click="MenuSaveFile_Click" Cursor="Hand">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/savefile_icon.png" Stretch="Uniform"/>
-                        </Button.Background>
+                    <Button ToolTip="Сохранить файл" Style="{StaticResource MaterialDesignFlatAccentButton}" Click="MenuSaveFile_Click" Cursor="Hand" Height="30">
+                        <Image Source="/img/savefile_icon.png"/>
                     </Button>
+                    <Button ToolTip="Открыть файл" Style="{StaticResource MaterialDesignFlatAccentButton}" Click="MenuOpenFile_Click" Cursor="Hand">
+                        <Image Source="/img/open_file.png"/>
+                    </Button>
+                    <Button ToolTip="Копировать" Style="{StaticResource MaterialDesignFlatAccentButton}" Command="ApplicationCommands.Copy" Cursor="Hand">
+                        <Image Source="/img/copy_icon.png"/>
+                    </Button>
+                    <Label Content="Размер шрифта" Foreground="white" VerticalAlignment="Center" Margin="20,0,0,0"/>
+                    <ComboBox x:Name="SelectFontSize" Foreground="White" SelectionChanged="SelectFontSize_SelectionChanged" >
+                        <ComboBoxItem Foreground="Black" Content="10"/>
+                        <ComboBoxItem Foreground="Black" x:Name="SelectDefaultFontSize" Content="12"/>
+                        <ComboBoxItem Content="14" Foreground="Black" />
+                        <ComboBoxItem Content="16" Foreground="Black"/>
+                    </ComboBox>
                 </ToolBar>
             </ToolBarPanel>
-            <TextBox x:Name="UserNotes" Margin="10" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Поле для записи" Foreground="White" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="200" />
+            <TextBox FontSize="12" x:Name="UserNotes" Margin="10" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Поле для записи" Foreground="White" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" MaxHeight="200" />
         </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" x:Name="UsersPanel" Visibility="Hidden">
             <Label Margin="0,15,0,30" Content="Список пользователей" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="22" FontFamily="Calibri" Foreground="#FFEFE2E2"/>
